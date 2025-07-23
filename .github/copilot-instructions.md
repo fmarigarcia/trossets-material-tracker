@@ -21,17 +21,51 @@ This is a full-stack material tracking system for a 3D printing business built w
 trossets-material-tracker/
 ├── .github/              # GitHub workflows and templates
 │   ├── workflows/       # CI/CD GitHub Actions
-│   └── instructions/    # Copilot and team guidelines
+│   └── copilot-instructions.md # Copilot guidelines
 ├── frontend/              # Next.js application
 │   ├── src/
 │   │   ├── app/          # App Router pages
 │   │   ├── components/   # Reusable React components
-│   │   ├── lib/         # Utilities and configurations
+│   │   │   ├── ui/       # UI components (Button, Card, Input, etc.)
+│   │   │   │   ├── Button/
+│   │   │   │   │   ├── Button.tsx
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── __tests__/
+│   │   │   │   │       └── Button.test.tsx
+│   │   │   │   ├── Card/
+│   │   │   │   │   ├── Card.tsx
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   └── __tests__/
+│   │   │   │   │       └── Card.test.tsx
+│   │   │   │   └── Input/
+│   │   │   │       ├── Input.tsx
+│   │   │   │       ├── index.ts
+│   │   │   │       └── __tests__/
+│   │   │   │           └── Input.test.tsx
+│   │   │   └── layout/   # Layout components
+│   │   │       └── Sidebar/
+│   │   │           ├── Sidebar.tsx
+│   │   │           ├── index.ts
+│   │   │           └── __tests__/
+│   │   │               └── Sidebar.test.tsx
 │   │   ├── contexts/    # React Context providers
+│   │   │   └── AuthContext/
+│   │   │       ├── AuthContext.tsx
+│   │   │       ├── index.ts
+│   │   │       └── __tests__/
+│   │   │           └── AuthContext.test.tsx
+│   │   ├── lib/         # Utilities and configurations
 │   │   ├── styles/      # Global styles and Tailwind config
 │   │   ├── types/       # TypeScript type definitions
-│   │   └── utils/       # Helper functions
+│   │   ├── utils/       # Helper functions
+│   │   │   ├── index.ts
+│   │   │   └── __tests__/
+│   │   │       └── index.test.ts
+│   │   └── __tests__/   # Test utilities and global test setup
+│   │       └── test-utils.tsx
 │   ├── public/          # Static assets
+│   ├── jest.config.js   # Jest configuration
+│   ├── jest.setup.js    # Jest setup file
 │   └── Dockerfile       # Frontend container configuration
 ├── backend/              # Node.js API server
 │   ├── src/
@@ -210,9 +244,21 @@ docker-compose down
 
 ### Testing Strategy
 - **Frontend**: Jest + React Testing Library for unit/integration tests
+  - **Component Tests**: Located in each component's `__tests__/` folder
+  - **Context Tests**: Located in each context's `__tests__/` folder
+  - **Utility Tests**: Located in `utils/__tests__/` folder
+  - **Test Utilities**: Global test setup in `src/__tests__/test-utils.tsx`
 - **Backend**: Jest + Supertest for API testing
 - **E2E**: Playwright for end-to-end testing (planned)
 - **Database**: Separate test database with automated setup/teardown
+
+### Component Organization
+- **Structure**: Each component has its own folder with:
+  - `ComponentName.tsx` - Main component file
+  - `index.ts` - Export file for clean imports
+  - `__tests__/ComponentName.test.tsx` - Component tests
+- **Import Pattern**: Use `import { ComponentName } from '@/components/ui/ComponentName'`
+- **Test Pattern**: Tests are co-located with components for better maintainability
 
 ### Code Quality Tools
 - **ESLint**: Code linting with Next.js and TypeScript configurations
