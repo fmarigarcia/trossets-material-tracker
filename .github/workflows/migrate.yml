@@ -1,0 +1,83 @@
+name: Database Migration
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run migration'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+      migration_type:
+        description: 'Type of migration to run'
+        required: true
+        default: 'deploy'
+        type: choice
+        options:
+          - deploy
+          - reset
+          - generate
+
+jobs:
+  migrate:
+    name: Database Migration
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./backend
+
+      - name: Generate Prisma Client
+        if: github.event.inputs.migration_type == 'generate'
+        run: npx prisma generate
+        working-directory: ./backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Deploy migrations
+        if: github.event.inputs.migration_type == 'deploy'
+        run: npx prisma migrate deploy
+        working-directory: ./backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Reset database (DANGER)
+        if: github.event.inputs.migration_type == 'reset' && github.event.inputs.environment != 'production'
+        run: npx prisma migrate reset --force
+        working-directory: ./backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Prevent production reset
+        if: github.event.inputs.migration_type == 'reset' && github.event.inputs.environment == 'production'
+        run: |
+          echo "❌ Cannot reset production database!"
+          exit 1
+
+      - name: Verify database status
+        run: npx prisma db pull
+        working-directory: ./backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Migration summary
+        run: |
+          echo "✅ Migration completed successfully!"
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Migration type: ${{ github.event.inputs.migration_type }}"

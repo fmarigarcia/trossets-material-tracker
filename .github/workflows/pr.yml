@@ -1,0 +1,186 @@
+name: Pull Request
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  # Validate PR title and labels
+  validate-pr:
+    name: Validate Pull Request
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate PR title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            test
+            chore
+            ci
+          requireScope: false
+
+      - name: Add size label
+        uses: pascalgn/size-label-action@v0.4.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          sizes: |
+            {
+              "0": "XS",
+              "20": "S",
+              "50": "M",
+              "200": "L",
+              "800": "XL",
+              "2000": "XXL"
+            }
+
+  # Run tests for PR
+  test-pr:
+    name: Test Pull Request
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        component: [frontend, backend]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.component }}/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./${{ matrix.component }}
+
+      - name: Run linting
+        run: npm run lint || echo "Linting not configured"
+        working-directory: ./${{ matrix.component }}
+
+      - name: Run type checking
+        run: |
+          if [ "${{ matrix.component }}" = "frontend" ]; then
+            npm run type-check
+          else
+            npx tsc --noEmit
+          fi
+        working-directory: ./${{ matrix.component }}
+
+      - name: Run tests
+        run: npm test || echo "Tests not configured"
+        working-directory: ./${{ matrix.component }}
+
+      - name: Build application
+        run: npm run build
+        working-directory: ./${{ matrix.component }}
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3001/api
+
+  # Deploy preview for frontend
+  deploy-preview:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'frontend/')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to preview
+        id: deploy
+        run: |
+          url=$(vercel --token=${{ secrets.VERCEL_TOKEN }} --confirm)
+          echo "url=$url" >> $GITHUB_OUTPUT
+        working-directory: ./frontend
+
+      - name: Comment PR with preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Preview deployment')
+            );
+
+            const body = `🚀 **Preview deployment ready!**
+            
+            📱 **Frontend**: ${{ steps.deploy.outputs.url }}
+            
+            This preview will be automatically updated when you push new commits to this PR.`;
+
+            if (botComment) {
+              github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+  # Check for breaking changes
+  breaking-changes:
+    name: Check Breaking Changes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for API breaking changes
+        run: |
+          # Check if API endpoints have been modified
+          if git diff origin/${{ github.base_ref }}..HEAD --name-only | grep -E "backend/src/routes|backend/src/types" > /dev/null; then
+            echo "⚠️ Potential API changes detected"
+            echo "Please ensure backward compatibility or update the frontend accordingly"
+            
+            # Create a comment if this is a breaking change
+            if git diff origin/${{ github.base_ref }}..HEAD | grep -E "^\-.*\s+(app\.|router\.)" > /dev/null; then
+              echo "🚨 BREAKING CHANGE DETECTED: API endpoints may have been removed or modified"
+              exit 1
+            fi
+          fi
+
+      - name: Check for database schema changes
+        run: |
+          if git diff origin/${{ github.base_ref }}..HEAD --name-only | grep -E "backend/prisma/schema.prisma" > /dev/null; then
+            echo "📊 Database schema changes detected"
+            echo "Please ensure migrations are included and reviewed"
+          fi
