@@ -1,7 +1,7 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { useAuth } from '@/contexts/AuthContext/AuthContext';
+import { Card, CardContent, CardHeader } from '@/components/ui/Card/Card';
 import { FiBox, FiBarChart, FiTrendingUp, FiAlertTriangle, FiDollarSign } from 'react-icons/fi';
 
 export default function DashboardPage() {
