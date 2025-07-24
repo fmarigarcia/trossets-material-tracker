@@ -32,7 +32,7 @@ const config = {
     '<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}',
   ],
   testPathIgnorePatterns: [
-    '<rootDir>/node_modules/', 
+    '<rootDir>/node_modules/',
     '<rootDir>/.next/',
     '<rootDir>/src/__tests__/test-utils.tsx',
   ],

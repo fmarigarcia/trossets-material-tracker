@@ -92,13 +92,13 @@ describe('AuthContext', () => {
   });
 
   it('handles successful login', async () => {
-    const mockUser = { 
-      id: '1', 
-      name: 'Test User', 
-      email: 'test@test.com', 
-      role: 'user' as const, 
-      createdAt: new Date().toISOString(), 
-      updatedAt: new Date().toISOString() 
+    const mockUser = {
+      id: '1',
+      name: 'Test User',
+      email: 'test@test.com',
+      role: 'user' as const,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     const mockToken = 'mock-token';
 
@@ -131,13 +131,13 @@ describe('AuthContext', () => {
   });
 
   it('handles successful registration', async () => {
-    const mockUser = { 
-      id: '1', 
-      name: 'Test User', 
-      email: 'test@test.com', 
-      role: 'user' as const, 
-      createdAt: new Date().toISOString(), 
-      updatedAt: new Date().toISOString() 
+    const mockUser = {
+      id: '1',
+      name: 'Test User',
+      email: 'test@test.com',
+      role: 'user' as const,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     const mockToken = 'mock-token';
 
@@ -211,13 +211,13 @@ describe('AuthContext', () => {
   });
 
   it('refreshes user data', async () => {
-    const mockUser = { 
-      id: '1', 
-      name: 'Updated User', 
-      email: 'test@test.com', 
+    const mockUser = {
+      id: '1',
+      name: 'Updated User',
+      email: 'test@test.com',
       role: 'user' as const,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     mockApiClient.getProfile.mockResolvedValueOnce({
