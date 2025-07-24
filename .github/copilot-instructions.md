@@ -266,6 +266,146 @@ docker-compose down
 - **TypeScript**: Strict type checking enabled
 - **Husky**: Pre-commit hooks for linting and testing
 
+## ESLint Configuration & Linting Rules
+
+### Frontend ESLint Configuration
+**Location**: `frontend/eslint.config.mjs`
+**Extends**: `['next/core-web-vitals', 'next/typescript', 'prettier']`
+
+#### Mandatory Linting Rules
+1. **No Explicit `any` Types** (`@typescript-eslint/no-explicit-any`)
+   ```typescript
+   // ❌ Avoid
+   function process(data: any): any {}
+   
+   // ✅ Preferred
+   function process(data: unknown): ProcessResult {}
+   function process<T>(data: T): ProcessedData<T> {}
+   ```
+
+2. **No Unused Variables** (`@typescript-eslint/no-unused-vars`)
+   ```typescript
+   // ❌ Avoid
+   import { unused, used } from './module';
+   catch (error) { /* error not used */ }
+   
+   // ✅ Preferred
+   import { used } from './module';
+   catch { /* no variable if not used */ }
+   catch (error) { console.error(error); }
+   ```
+
+3. **No Empty Object Types** (`@typescript-eslint/no-empty-object-type`)
+   ```typescript
+   // ❌ Avoid
+   interface EmptyProps {}
+   
+   // ✅ Preferred
+   interface EmptyProps extends Record<string, never> {}
+   type EmptyProps = Record<string, never>;
+   ```
+
+4. **Proper Error Handling**
+   ```typescript
+   // ❌ Avoid
+   catch (error: any) {
+     throw new Error(error.message);
+   }
+   
+   // ✅ Preferred
+   catch (error: unknown) {
+     const message = error instanceof Error ? error.message : 'Unknown error';
+     throw new Error(message);
+   }
+   ```
+
+5. **JSX File Extensions**
+   - Use `.tsx` for files containing JSX
+   - Use `.ts` for pure TypeScript files
+   ```
+   ✅ Component.tsx (contains JSX)
+   ✅ utils.ts (no JSX)
+   ```
+
+### Backend ESLint Configuration
+**Location**: `backend/eslint.config.mjs`
+**Extends**: `['js/recommended', 'typescript-eslint/recommended']`
+
+#### Backend-Specific Rules
+1. **API Error Handling**
+   ```typescript
+   // ❌ Avoid
+   catch (error: any) {
+     res.status(500).json({ error: error.message });
+   }
+   
+   // ✅ Preferred
+   catch (error: unknown) {
+     const message = error instanceof Error ? error.message : 'Internal server error';
+     res.status(500).json({ success: false, error: { message } });
+   }
+   ```
+
+2. **Type-Safe Request/Response**
+   ```typescript
+   // ✅ Preferred
+   interface ApiResponse<T = unknown> {
+     success: boolean;
+     data?: T;
+     error?: { message: string; details?: unknown };
+   }
+   ```
+
+### Linting Commands
+- **Frontend**: `npm run lint` (check), `npm run lint:fix` (auto-fix)
+- **Backend**: `npm run lint` (check), `npm run lint:fix` (auto-fix)
+
+### Pre-commit Requirements
+- All files must pass ESLint validation
+- Zero warnings or errors allowed
+- Type checking must pass (`npm run type-check`)
+- Tests must pass before commit
+
+### Common Linting Issues & Solutions
+
+#### 1. Browser Compatibility
+```typescript
+// ❌ Avoid (iteration not compatible with older browsers)
+for (const [key, value] of params.entries()) {}
+
+// ✅ Preferred
+params.forEach((value, key) => {});
+```
+
+#### 2. Type Assertions
+```typescript
+// ❌ Avoid
+const result = data as any;
+
+// ✅ Preferred
+interface ExpectedType { /* properties */ }
+const result = data as ExpectedType;
+```
+
+#### 3. Import Organization
+```typescript
+// ✅ Preferred order
+import React from 'react';                    // External libraries
+import { NextPage } from 'next';              // Framework imports
+import { Component } from '@/components';     // Internal absolute imports
+import { utility } from '../utils';          // Internal relative imports
+```
+
+#### 4. Testing Files
+```typescript
+// ✅ All test files should import jest-dom
+import '@testing-library/jest-dom';
+
+// ✅ Use proper file extensions
+// Component.test.tsx (for components with JSX)
+// utils.test.ts (for utility functions)
+```
+
 ### API Development
 - **Swagger/OpenAPI**: Auto-generated documentation at `/api-docs`
 - **Postman Collection**: Available for API testing
@@ -283,17 +423,30 @@ docker-compose down
 ## Coding Standards
 
 ### TypeScript
-- Use strict TypeScript configuration
+- Use strict TypeScript configuration with `noImplicitAny: true`
+- **Never use `any` types** - use `unknown`, specific interfaces, or generics
 - Define proper interfaces for all data structures
 - Use enums for fixed value sets (MaterialType, ProjectStatus, UserRole)
 - Implement proper error handling with custom error types
+- **Type-safe error handling**: Always catch `error: unknown` and check types
+- **Generic constraints**: Use proper generic constraints instead of `any`
+  ```typescript
+  // ✅ Preferred
+  function process<T extends Record<string, unknown>>(data: T): ProcessedData<T>
+  
+  // ❌ Avoid
+  function process(data: any): any
+  ```
 
 ### Backend (Node.js/Express)
 - Follow RESTful API conventions
 - Use middleware for authentication, validation, and error handling
-- Implement proper request/response types
+- Implement proper request/response types with `ApiResponse<T>` interface
 - Use Prisma for all database operations
 - Include OpenAPI/Swagger documentation
+- **Consistent error responses**: Always return `{ success: boolean, data?, error? }`
+- **Type-safe middleware**: Define proper middleware types
+- **Input validation**: Use Zod or Joi for runtime type checking
 
 ### Frontend (Next.js/React)
 - Use App Router for routing
@@ -301,6 +454,10 @@ docker-compose down
 - Use client components only when necessary (interactivity, state)
 - Follow React best practices for component composition
 - Use Tailwind CSS for styling with consistent design system
+- **Component testing**: Always include `@testing-library/jest-dom` in test files
+- **JSX syntax**: Use `.tsx` extension for files containing JSX
+- **Import organization**: External → Framework → Internal absolute → Internal relative
+- **Unused imports**: Remove all unused imports to pass linting
 
 ### Database (Prisma/PostgreSQL)
 - Use descriptive model and field names
