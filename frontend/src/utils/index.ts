@@ -78,7 +78,7 @@ export function generateId(): string {
 /**
  * Debounce function to limit the rate at which a function can fire
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -92,11 +92,11 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * Check if a value is empty (null, undefined, empty string, empty array, empty object)
  */
-export function isEmpty(value: any): boolean {
+export function isEmpty(value: unknown): boolean {
   if (value == null) return true;
   if (typeof value === 'string') return value.trim() === '';
   if (Array.isArray(value)) return value.length === 0;
-  if (typeof value === 'object') return Object.keys(value).length === 0;
+  if (typeof value === 'object') return Object.keys(value as object).length === 0;
   return false;
 }
 
@@ -154,7 +154,7 @@ export function sleep(ms: number): Promise<void> {
 /**
  * Create query string from object
  */
-export function createQueryString(params: Record<string, any>): string {
+export function createQueryString(params: Record<string, unknown>): string {
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
@@ -173,9 +173,9 @@ export function parseQueryString(queryString: string): Record<string, string> {
   const params = new URLSearchParams(queryString);
   const result: Record<string, string> = {};
 
-  for (const [key, value] of params.entries()) {
+  params.forEach((value, key) => {
     result[key] = value;
-  }
+  });
 
   return result;
 }

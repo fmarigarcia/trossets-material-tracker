@@ -24,7 +24,7 @@ function TestComponent() {
   const handleLogin = async () => {
     try {
       await auth.login({ email: 'test@test.com', password: 'password' });
-    } catch (error) {
+    } catch {
       // Errors are expected in some tests, handle them silently
     }
   };
@@ -36,7 +36,7 @@ function TestComponent() {
         password: 'password',
         name: 'Test User',
       });
-    } catch (error) {
+    } catch {
       // Errors are expected in some tests, handle them silently
     }
   };
@@ -44,7 +44,7 @@ function TestComponent() {
   const handleRefresh = async () => {
     try {
       await auth.refreshUser();
-    } catch (error) {
+    } catch {
       // Errors are expected in some tests, handle them silently
     }
   };

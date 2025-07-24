@@ -4,6 +4,12 @@ import React, { createContext, useContext, useReducer, useEffect, ReactNode } fr
 import { User, LoginRequest, RegisterRequest } from '@/types';
 import { apiClient } from '@/lib/api';
 
+interface ApiError {
+  error?: {
+    message?: string;
+  };
+}
+
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -114,9 +120,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       } else {
         throw new Error('Login failed');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       dispatch({ type: 'SET_LOADING', payload: false });
-      throw new Error(error.error?.message || 'Login failed');
+      const errorMessage = (error as ApiError).error?.message || 'Login failed';
+      throw new Error(errorMessage);
     }
   };
 
@@ -132,9 +139,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       } else {
         throw new Error('Registration failed');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       dispatch({ type: 'SET_LOADING', payload: false });
-      throw new Error(error.error?.message || 'Registration failed');
+      const errorMessage = (error as ApiError).error?.message || 'Registration failed';
+      throw new Error(errorMessage);
     }
   };
 

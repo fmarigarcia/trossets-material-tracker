@@ -68,8 +68,9 @@ class ApiClient {
     try {
       const response = await promise;
       return response.data;
-    } catch (error: any) {
-      throw error.response?.data || { success: false, error: { message: 'Network error' } };
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: unknown } };
+      throw axiosError.response?.data || { success: false, error: { message: 'Network error' } };
     }
   }
 

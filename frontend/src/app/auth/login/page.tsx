@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext/AuthContext';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card/Card';
+import { Card, CardContent } from '@/components/ui/Card/Card';
 import Button from '@/components/ui/Button/Button';
 import Input from '@/components/ui/Input/Input';
 import { FiBox, FiEye, FiEyeOff } from 'react-icons/fi';
@@ -25,8 +25,9 @@ export default function LoginPage() {
     try {
       await login(formData);
       // Redirect will be handled by the auth context
-    } catch (error: any) {
-      setErrors({ general: error.message || 'Login failed' });
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Login failed';
+      setErrors({ general: errorMessage });
     } finally {
       setIsLoading(false);
     }
