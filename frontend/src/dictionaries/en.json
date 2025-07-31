@@ -1,0 +1,229 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "materials": "Materials",
+    "projects": "Projects",
+    "purchases": "Purchases",
+    "suppliers": "Suppliers",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember me",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "invalidCredentials": "Invalid email or password",
+    "accountCreated": "Account created successfully",
+    "passwordMismatch": "Passwords do not match",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required"
+  },
+  "home": {
+    "title": "Trossets Material Tracker",
+    "subtitle": "Efficiently manage your 3D printing materials and projects",
+    "description": "Track inventory, monitor costs, and organize your 3D printing workflow with our comprehensive material management system.",
+    "features": {
+      "materialTracking": {
+        "title": "Material Tracking",
+        "description": "Keep track of your filament inventory, usage, and costs"
+      },
+      "projectManagement": {
+        "title": "Project Management",
+        "description": "Organize and monitor your 3D printing projects"
+      },
+      "costAnalysis": {
+        "title": "Cost Analysis",
+        "description": "Analyze material costs and project profitability"
+      },
+      "supplierManagement": {
+        "title": "Supplier Management",
+        "description": "Manage your material suppliers and purchase history"
+      }
+    },
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "overview": "Overview",
+    "stats": {
+      "totalMaterials": "Total Materials",
+      "activeMaterials": "Active Materials",
+      "lowStock": "Low Stock Items",
+      "totalProjects": "Total Projects",
+      "activeProjects": "Active Projects",
+      "completedProjects": "Completed Projects",
+      "totalValue": "Total Inventory Value",
+      "monthlyExpenses": "Monthly Expenses"
+    },
+    "recentActivity": "Recent Activity",
+    "lowStockAlerts": "Low Stock Alerts",
+    "upcomingProjects": "Upcoming Projects",
+    "quickActions": "Quick Actions",
+    "addMaterial": "Add Material",
+    "addProject": "Add Project",
+    "recordPurchase": "Record Purchase"
+  },
+  "materials": {
+    "title": "Materials",
+    "addNew": "Add New Material",
+    "list": "Material List",
+    "details": "Material Details",
+    "edit": "Edit Material",
+    "delete": "Delete Material",
+    "name": "Name",
+    "type": "Type",
+    "brand": "Brand",
+    "color": "Color",
+    "diameter": "Diameter",
+    "density": "Density",
+    "costPerKg": "Cost per Kg",
+    "totalWeight": "Total Weight",
+    "usedWeight": "Used Weight",
+    "remainingWeight": "Remaining Weight",
+    "supplier": "Supplier",
+    "notes": "Notes",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "lowStockThreshold": "Low Stock Threshold",
+    "inStock": "In Stock",
+    "lowStock": "Low Stock",
+    "outOfStock": "Out of Stock",
+    "types": {
+      "PLA": "PLA",
+      "ABS": "ABS",
+      "PETG": "PETG",
+      "TPU": "TPU",
+      "WOOD": "Wood",
+      "METAL": "Metal",
+      "CARBON": "Carbon Fiber"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "addNew": "Add New Project",
+    "list": "Project List",
+    "details": "Project Details",
+    "edit": "Edit Project",
+    "delete": "Delete Project",
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "estimatedCost": "Estimated Cost",
+    "actualCost": "Actual Cost",
+    "materials": "Materials",
+    "addMaterial": "Add Material",
+    "materialUsage": "Material Usage",
+    "totalCost": "Total Cost",
+    "progress": "Progress",
+    "notes": "Notes",
+    "statuses": {
+      "PLANNED": "Planned",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled",
+      "ON_HOLD": "On Hold"
+    }
+  },
+  "purchases": {
+    "title": "Purchases",
+    "addNew": "Add New Purchase",
+    "list": "Purchase List",
+    "details": "Purchase Details",
+    "edit": "Edit Purchase",
+    "delete": "Delete Purchase",
+    "material": "Material",
+    "supplier": "Supplier",
+    "quantity": "Quantity",
+    "weight": "Weight",
+    "unitCost": "Unit Cost",
+    "totalCost": "Total Cost",
+    "purchaseDate": "Purchase Date",
+    "invoice": "Invoice",
+    "notes": "Notes",
+    "received": "Received",
+    "pending": "Pending"
+  },
+  "suppliers": {
+    "title": "Suppliers",
+    "addNew": "Add New Supplier",
+    "list": "Supplier List",
+    "details": "Supplier Details",
+    "edit": "Edit Supplier",
+    "delete": "Delete Supplier",
+    "name": "Name",
+    "contactName": "Contact Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "website": "Website",
+    "notes": "Notes",
+    "totalPurchases": "Total Purchases",
+    "lastPurchase": "Last Purchase",
+    "materials": "Materials Supplied"
+  },
+  "forms": {
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "minLength": "Must be at least {min} characters",
+      "maxLength": "Must be no more than {max} characters",
+      "number": "Must be a valid number",
+      "positive": "Must be a positive number",
+      "date": "Please enter a valid date"
+    },
+    "messages": {
+      "saveSuccess": "Saved successfully",
+      "saveError": "Error saving data",
+      "deleteSuccess": "Deleted successfully",
+      "deleteError": "Error deleting data",
+      "deleteConfirm": "Are you sure you want to delete this item?"
+    }
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "serverError": "Internal server error",
+    "networkError": "Network error",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access forbidden",
+    "timeout": "Request timeout"
+  },
+  "meta": {
+    "title": "Trossets Material Tracker",
+    "description": "Track and manage 3D printing materials and projects",
+    "keywords": "3D printing, material tracking, inventory management, projects"
+  }
+}

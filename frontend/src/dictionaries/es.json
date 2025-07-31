@@ -1,0 +1,229 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "materials": "Materiales",
+    "projects": "Proyectos",
+    "purchases": "Compras",
+    "suppliers": "Proveedores",
+    "settings": "Configuración",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse"
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "rememberMe": "Recordarme",
+    "dontHaveAccount": "¿No tienes una cuenta?",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "invalidCredentials": "Correo o contraseña inválidos",
+    "accountCreated": "Cuenta creada exitosamente",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "emailRequired": "El correo electrónico es requerido",
+    "passwordRequired": "La contraseña es requerida"
+  },
+  "home": {
+    "title": "Gestor de Materiales Trossets",
+    "subtitle": "Gestiona eficientemente tus materiales y proyectos de impresión 3D",
+    "description": "Rastrea inventario, monitorea costos y organiza tu flujo de trabajo de impresión 3D con nuestro sistema integral de gestión de materiales.",
+    "features": {
+      "materialTracking": {
+        "title": "Seguimiento de Materiales",
+        "description": "Mantén el control de tu inventario de filamentos, uso y costos"
+      },
+      "projectManagement": {
+        "title": "Gestión de Proyectos",
+        "description": "Organiza y monitorea tus proyectos de impresión 3D"
+      },
+      "costAnalysis": {
+        "title": "Análisis de Costos",
+        "description": "Analiza los costos de materiales y rentabilidad de proyectos"
+      },
+      "supplierManagement": {
+        "title": "Gestión de Proveedores",
+        "description": "Gestiona tus proveedores de materiales e historial de compras"
+      }
+    },
+    "getStarted": "Comenzar",
+    "learnMore": "Saber Más"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Bienvenido de vuelta",
+    "overview": "Resumen",
+    "stats": {
+      "totalMaterials": "Total de Materiales",
+      "activeMaterials": "Materiales Activos",
+      "lowStock": "Artículos con Poco Stock",
+      "totalProjects": "Total de Proyectos",
+      "activeProjects": "Proyectos Activos",
+      "completedProjects": "Proyectos Completados",
+      "totalValue": "Valor Total del Inventario",
+      "monthlyExpenses": "Gastos Mensuales"
+    },
+    "recentActivity": "Actividad Reciente",
+    "lowStockAlerts": "Alertas de Poco Stock",
+    "upcomingProjects": "Próximos Proyectos",
+    "quickActions": "Acciones Rápidas",
+    "addMaterial": "Añadir Material",
+    "addProject": "Añadir Proyecto",
+    "recordPurchase": "Registrar Compra"
+  },
+  "materials": {
+    "title": "Materiales",
+    "addNew": "Añadir Nuevo Material",
+    "list": "Lista de Materiales",
+    "details": "Detalles del Material",
+    "edit": "Editar Material",
+    "delete": "Eliminar Material",
+    "name": "Nombre",
+    "type": "Tipo",
+    "brand": "Marca",
+    "color": "Color",
+    "diameter": "Diámetro",
+    "density": "Densidad",
+    "costPerKg": "Costo por Kg",
+    "totalWeight": "Peso Total",
+    "usedWeight": "Peso Usado",
+    "remainingWeight": "Peso Restante",
+    "supplier": "Proveedor",
+    "notes": "Notas",
+    "createdAt": "Creado En",
+    "updatedAt": "Actualizado En",
+    "lowStockThreshold": "Umbral de Poco Stock",
+    "inStock": "En Stock",
+    "lowStock": "Poco Stock",
+    "outOfStock": "Sin Stock",
+    "types": {
+      "PLA": "PLA",
+      "ABS": "ABS",
+      "PETG": "PETG",
+      "TPU": "TPU",
+      "WOOD": "Madera",
+      "METAL": "Metal",
+      "CARBON": "Fibra de Carbono"
+    }
+  },
+  "projects": {
+    "title": "Proyectos",
+    "addNew": "Añadir Nuevo Proyecto",
+    "list": "Lista de Proyectos",
+    "details": "Detalles del Proyecto",
+    "edit": "Editar Proyecto",
+    "delete": "Eliminar Proyecto",
+    "name": "Nombre",
+    "description": "Descripción",
+    "status": "Estado",
+    "startDate": "Fecha de Inicio",
+    "endDate": "Fecha de Fin",
+    "estimatedCost": "Costo Estimado",
+    "actualCost": "Costo Real",
+    "materials": "Materiales",
+    "addMaterial": "Añadir Material",
+    "materialUsage": "Uso de Material",
+    "totalCost": "Costo Total",
+    "progress": "Progreso",
+    "notes": "Notas",
+    "statuses": {
+      "PLANNED": "Planificado",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado",
+      "ON_HOLD": "En Espera"
+    }
+  },
+  "purchases": {
+    "title": "Compras",
+    "addNew": "Añadir Nueva Compra",
+    "list": "Lista de Compras",
+    "details": "Detalles de la Compra",
+    "edit": "Editar Compra",
+    "delete": "Eliminar Compra",
+    "material": "Material",
+    "supplier": "Proveedor",
+    "quantity": "Cantidad",
+    "weight": "Peso",
+    "unitCost": "Costo Unitario",
+    "totalCost": "Costo Total",
+    "purchaseDate": "Fecha de Compra",
+    "invoice": "Factura",
+    "notes": "Notas",
+    "received": "Recibido",
+    "pending": "Pendiente"
+  },
+  "suppliers": {
+    "title": "Proveedores",
+    "addNew": "Añadir Nuevo Proveedor",
+    "list": "Lista de Proveedores",
+    "details": "Detalles del Proveedor",
+    "edit": "Editar Proveedor",
+    "delete": "Eliminar Proveedor",
+    "name": "Nombre",
+    "contactName": "Nombre de Contacto",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "address": "Dirección",
+    "website": "Sitio Web",
+    "notes": "Notas",
+    "totalPurchases": "Total de Compras",
+    "lastPurchase": "Última Compra",
+    "materials": "Materiales Suministrados"
+  },
+  "forms": {
+    "validation": {
+      "required": "Este campo es requerido",
+      "email": "Por favor ingresa un correo electrónico válido",
+      "minLength": "Debe tener al menos {min} caracteres",
+      "maxLength": "No debe tener más de {max} caracteres",
+      "number": "Debe ser un número válido",
+      "positive": "Debe ser un número positivo",
+      "date": "Por favor ingresa una fecha válida"
+    },
+    "messages": {
+      "saveSuccess": "Guardado exitosamente",
+      "saveError": "Error al guardar datos",
+      "deleteSuccess": "Eliminado exitosamente",
+      "deleteError": "Error al eliminar datos",
+      "deleteConfirm": "¿Estás seguro de que quieres eliminar este elemento?"
+    }
+  },
+  "errors": {
+    "notFound": "Página no encontrada",
+    "serverError": "Error interno del servidor",
+    "networkError": "Error de red",
+    "unauthorized": "Acceso no autorizado",
+    "forbidden": "Acceso prohibido",
+    "timeout": "Tiempo de espera agotado"
+  },
+  "meta": {
+    "title": "Gestor de Materiales Trossets",
+    "description": "Rastrea y gestiona materiales y proyectos de impresión 3D",
+    "keywords": "impresión 3D, seguimiento de materiales, gestión de inventario, proyectos"
+  }
+}
