@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum MaterialType {
+  PLA
+  ABS
+  PETG
+  TPU
+  WOOD
+  METAL
+  CARBON_FIBER
+  OTHER
+}
+
+enum ProjectStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  projects  Project[]
+  purchases Purchase[]
+
+  @@map("users")
+}
+
+model Supplier {
+  id          String   @id @default(cuid())
+  name        String
+  contactInfo String?
+  website     String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  materials Material[]
+  purchases Purchase[]
+
+  @@map("suppliers")
+}
+
+model Material {
+  id          String      @id @default(cuid())
+  name        String
+  type        MaterialType
+  brand       String?
+  color       String?
+  diameter    Float? // For filaments (1.75mm, 3.0mm, etc.)
+  density     Float? // g/cm³
+  costPerKg   Float // Cost per kilogram
+  totalWeight Float // Total weight purchased (in grams)
+  usedWeight  Float   @default(0) // Weight used (in grams)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Foreign Keys
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+
+  // Relations
+  projectMaterials ProjectMaterial[]
+  purchases        Purchase[]
+
+  @@map("materials")
+}
+
+model Project {
+  id              String        @id @default(cuid())
+  name            String
+  description     String?
+  status          ProjectStatus @default(PLANNED)
+  estimatedCost   Float?
+  actualCost      Float?
+  startDate       DateTime?
+  completionDate  DateTime?
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Foreign Keys
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  projectMaterials ProjectMaterial[]
+
+  @@map("projects")
+}
+
+model ProjectMaterial {
+  id         String   @id @default(cuid())
+  weightUsed Float // Weight used in grams
+  cost       Float // Cost for this usage
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Foreign Keys
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  materialId String
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Restrict)
+
+  @@unique([projectId, materialId])
+  @@map("project_materials")
+}
+
+model Purchase {
+  id           String   @id @default(cuid())
+  quantity     Int // Number of items purchased
+  weight       Float // Total weight purchased (in grams)
+  unitCost     Float // Cost per unit
+  totalCost    Float // Total cost of purchase
+  purchaseDate DateTime
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Foreign Keys
+  materialId String
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Restrict)
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("purchases")
+}

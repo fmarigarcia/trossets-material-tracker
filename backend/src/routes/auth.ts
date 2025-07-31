@@ -1,5 +1,8 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { asyncHandler } from '../middleware/errorHandler';
+import { authenticate } from '../middleware/auth';
+import { validateRequest, registerSchema, loginSchema } from '../utils/validation';
+import { register, login, logout, getCurrentUser } from '../controllers/authController';
 
 const router = Router();
 
@@ -39,15 +42,10 @@ const router = Router();
  *       409:
  *         description: User already exists
  */
-router.post('/register', asyncHandler(async (req: Request, res: Response) => {
-  // TODO: Implement user registration
-  res.status(501).json({
-    success: false,
-    error: {
-      message: 'Registration endpoint not implemented yet',
-    },
-  });
-}));
+router.post('/register', 
+  validateRequest(registerSchema),
+  asyncHandler(register)
+);
 
 /**
  * @swagger
@@ -76,15 +74,10 @@ router.post('/register', asyncHandler(async (req: Request, res: Response) => {
  *       401:
  *         description: Invalid credentials
  */
-router.post('/login', asyncHandler(async (req: Request, res: Response) => {
-  // TODO: Implement user login
-  res.status(501).json({
-    success: false,
-    error: {
-      message: 'Login endpoint not implemented yet',
-    },
-  });
-}));
+router.post('/login',
+  validateRequest(loginSchema),
+  asyncHandler(login)
+);
 
 /**
  * @swagger
@@ -98,15 +91,10 @@ router.post('/login', asyncHandler(async (req: Request, res: Response) => {
  *       200:
  *         description: Logout successful
  */
-router.post('/logout', asyncHandler(async (req: Request, res: Response) => {
-  // TODO: Implement user logout
-  res.status(501).json({
-    success: false,
-    error: {
-      message: 'Logout endpoint not implemented yet',
-    },
-  });
-}));
+router.post('/logout',
+  authenticate,
+  asyncHandler(logout)
+);
 
 /**
  * @swagger
@@ -122,14 +110,9 @@ router.post('/logout', asyncHandler(async (req: Request, res: Response) => {
  *       401:
  *         description: Unauthorized
  */
-router.get('/me', asyncHandler(async (req: Request, res: Response) => {
-  // TODO: Implement get current user
-  res.status(501).json({
-    success: false,
-    error: {
-      message: 'Get user profile endpoint not implemented yet',
-    },
-  });
-}));
+router.get('/me',
+  authenticate,
+  asyncHandler(getCurrentUser)
+);
 
 export default router;
