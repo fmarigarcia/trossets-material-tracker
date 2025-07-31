@@ -2,6 +2,17 @@
 
 This is the frontend application for the Trossets Material Tracker, built with Next.js 13+ (App Router), TypeScript, and Tailwind CSS.
 
+## 🌍 Internationalization
+
+This application supports multiple languages:
+
+- **English (en)** - Default language
+- **Spanish (es)** - Secondary language
+
+The app automatically detects your browser language and redirects accordingly. You can also manually switch languages using the language switcher in the header.
+
+**For developers**: See [INTERNATIONALIZATION.md](./INTERNATIONALIZATION.md) for detailed implementation guide.
+
 ## Getting Started
 
 ### Prerequisites
@@ -39,6 +50,7 @@ This is the frontend application for the Trossets Material Tracker, built with N
 
 ## Features
 
+- **🌍 Internationalization**: English and Spanish language support with automatic detection
 - **Dashboard**: Overview of materials, projects, and inventory
 - **Material Management**: Track filament inventory and stock levels
 - **Project Tracking**: Monitor 3D printing projects and costs
