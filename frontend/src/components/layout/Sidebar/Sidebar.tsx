@@ -4,15 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiBox, FiHome, FiFolder, FiShoppingCart, FiUsers, FiBarChart } from 'react-icons/fi';
 import { cn } from '@/utils';
-
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: FiHome },
-  { name: 'Materials', href: '/materials', icon: FiBox },
-  { name: 'Projects', href: '/projects', icon: FiFolder },
-  { name: 'Purchases', href: '/purchases', icon: FiShoppingCart },
-  { name: 'Suppliers', href: '/suppliers', icon: FiUsers },
-  { name: 'Analytics', href: '/analytics', icon: FiBarChart },
-];
+import { useTranslations } from '@/contexts/TranslationContext';
+import { useLocale } from '@/hooks/useLocale';
 
 interface SidebarProps {
   className?: string;
@@ -20,6 +13,17 @@ interface SidebarProps {
 
 export default function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
+  const locale = useLocale();
+  const dict = useTranslations();
+
+  const navigation = [
+    { name: dict.navigation.dashboard, href: `/${locale}/dashboard`, icon: FiHome },
+    { name: dict.navigation.materials, href: `/${locale}/materials`, icon: FiBox },
+    { name: dict.navigation.projects, href: `/${locale}/projects`, icon: FiFolder },
+    { name: dict.navigation.purchases, href: `/${locale}/purchases`, icon: FiShoppingCart },
+    { name: dict.navigation.suppliers, href: `/${locale}/suppliers`, icon: FiUsers },
+    { name: 'Analytics', href: `/${locale}/analytics`, icon: FiBarChart },
+  ];
 
   return (
     <div
@@ -31,7 +35,7 @@ export default function Sidebar({ className }: SidebarProps) {
       {/* Logo */}
       <div className="border-secondary-200 flex h-16 items-center border-b px-6">
         <FiBox className="text-primary-600 h-8 w-8" />
-        <span className="text-secondary-900 ml-3 text-lg font-semibold">Material Tracker</span>
+        <span className="text-secondary-900 ml-3 text-lg font-semibold">{dict.home.title}</span>
       </div>
 
       {/* Navigation */}
@@ -60,7 +64,7 @@ export default function Sidebar({ className }: SidebarProps) {
 
       {/* Footer */}
       <div className="border-secondary-200 border-t p-4">
-        <p className="text-secondary-500 text-center text-xs">© 2025 Trossets Material Tracker</p>
+        <p className="text-secondary-500 text-center text-xs">© 2025 {dict.home.title}</p>
       </div>
     </div>
   );

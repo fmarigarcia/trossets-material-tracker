@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+// Re-export i18n utilities
+export * from './i18n';
+
 /**
  * Utility function to merge Tailwind CSS classes
  */
