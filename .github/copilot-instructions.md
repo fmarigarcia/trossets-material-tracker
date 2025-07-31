@@ -27,33 +27,8 @@ trossets-material-tracker/
 │   │   ├── app/          # App Router pages
 │   │   ├── components/   # Reusable React components
 │   │   │   ├── ui/       # UI components (Button, Card, Input, etc.)
-│   │   │   │   ├── Button/
-│   │   │   │   │   ├── Button.tsx
-│   │   │   │   │   ├── index.ts
-│   │   │   │   │   └── __tests__/
-│   │   │   │   │       └── Button.test.tsx
-│   │   │   │   ├── Card/
-│   │   │   │   │   ├── Card.tsx
-│   │   │   │   │   ├── index.ts
-│   │   │   │   │   └── __tests__/
-│   │   │   │   │       └── Card.test.tsx
-│   │   │   │   └── Input/
-│   │   │   │       ├── Input.tsx
-│   │   │   │       ├── index.ts
-│   │   │   │       └── __tests__/
-│   │   │   │           └── Input.test.tsx
 │   │   │   └── layout/   # Layout components
-│   │   │       └── Sidebar/
-│   │   │           ├── Sidebar.tsx
-│   │   │           ├── index.ts
-│   │   │           └── __tests__/
-│   │   │               └── Sidebar.test.tsx
 │   │   ├── contexts/    # React Context providers
-│   │   │   └── AuthContext/
-│   │   │       ├── AuthContext.tsx
-│   │   │       ├── index.ts
-│   │   │       └── __tests__/
-│   │   │           └── AuthContext.test.tsx
 │   │   ├── lib/         # Utilities and configurations
 │   │   ├── styles/      # Global styles and Tailwind config
 │   │   ├── types/       # TypeScript type definitions
@@ -69,9 +44,13 @@ trossets-material-tracker/
 │   └── Dockerfile       # Frontend container configuration
 ├── backend/              # Node.js API server
 │   ├── src/
-│   │   ├── routes/      # Express route handlers
+│   │   ├── routes/      # Express route handlers (minimal logic, HTTP concerns only)
+│   │   ├── controllers/ # Business logic and data processing
+│   │   │   └── __tests__/ # Controller test suites
 │   │   ├── middleware/  # Express middleware
 │   │   ├── config/      # Configuration files (Swagger, etc.)
+│   │   ├── utils/       # Helper functions and shared utilities
+│   │   │   └── __tests__/ # Utility function test suites
 │   │   └── types/       # Backend type definitions
 │   ├── prisma/          # Database schema and migrations
 │   └── Dockerfile       # Backend container configuration
@@ -447,6 +426,10 @@ import '@testing-library/jest-dom';
 - **Consistent error responses**: Always return `{ success: boolean, data?, error? }`
 - **Type-safe middleware**: Define proper middleware types
 - **Input validation**: Use Zod or Joi for runtime type checking
+- **Route organization**: Keep routes minimal - only handle HTTP concerns (request parsing, response formatting)
+- **Controller logic**: Move all business logic to corresponding controllers in `/controllers` folder
+- **Code reusability**: Avoid code duplication by creating helper functions when logic is repeated
+- **Testing requirements**: Every route, controller, and helper function must have a basic test suite
 
 ### Frontend (Next.js/React)
 - Use App Router for routing
