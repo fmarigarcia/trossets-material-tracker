@@ -49,8 +49,5 @@ coverage/
 ehthumbs.db
 Thumbs.db
 
-# Docker
-.dockerignore
-
 # Prisma
 prisma/migrations/dev.db*

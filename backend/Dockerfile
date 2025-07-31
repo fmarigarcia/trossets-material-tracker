@@ -8,8 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+# Install ALL dependencies (including dev dependencies for building)
+RUN npm ci && npm cache clean --force
 
 # Generate Prisma client
 RUN npx prisma generate
@@ -30,11 +30,15 @@ WORKDIR /app
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S backend -u 1001
 
+# Copy package files for production dependencies
+COPY package*.json ./
+COPY --from=builder /app/prisma ./prisma/
+
+# Install only production dependencies
+RUN npm ci --omit=dev && npm cache clean --force
+
 # Copy built application from builder stage
 COPY --from=builder --chown=backend:nodejs /app/dist ./dist
-COPY --from=builder --chown=backend:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=backend:nodejs /app/package*.json ./
-COPY --from=builder --chown=backend:nodejs /app/prisma ./prisma
 
 # Set environment variables
 ENV NODE_ENV=production
