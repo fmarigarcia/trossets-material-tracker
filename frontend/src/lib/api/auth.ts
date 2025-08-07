@@ -34,9 +34,7 @@ export class AuthApi {
    * Get current user profile
    */
   async getProfile(): Promise<ApiResponse<User>> {
-    return httpClient.handleResponse<ApiResponse<User>>(
-      httpClient.getClient().get('/auth/profile')
-    );
+    return httpClient.handleResponse<ApiResponse<User>>(httpClient.getClient().get('/auth/me'));
   }
 }
 

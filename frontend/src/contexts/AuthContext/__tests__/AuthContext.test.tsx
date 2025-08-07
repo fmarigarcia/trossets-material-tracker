@@ -107,7 +107,10 @@ describe('AuthContext', () => {
 
     mockAuthApi.login.mockResolvedValueOnce({
       success: true,
-      data: { user: mockUser, token: mockToken },
+      data: {
+        user: mockUser,
+        tokens: { accessToken: mockToken },
+      },
     });
 
     const user = userEvent.setup();
@@ -147,7 +150,10 @@ describe('AuthContext', () => {
 
     mockAuthApi.register.mockResolvedValueOnce({
       success: true,
-      data: { user: mockUser, token: mockToken },
+      data: {
+        user: mockUser,
+        tokens: { accessToken: mockToken },
+      },
     });
 
     const user = userEvent.setup();
