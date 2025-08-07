@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AuthProvider, useAuth } from '../AuthContext';
-import * as api from '@/lib/api';
+import { authApi } from '@/lib/api/auth';
 
 // Mock the API client
 jest.mock('@/lib/api', () => ({
@@ -15,7 +15,7 @@ jest.mock('@/lib/api', () => ({
   },
 }));
 
-const mockApiClient = api.apiClient as jest.Mocked<typeof api.apiClient>;
+const mockAuthApi = authApi as jest.Mocked<typeof authApi>;
 
 // Test component to access auth context
 function TestComponent() {
@@ -34,7 +34,8 @@ function TestComponent() {
       await auth.register({
         email: 'test@test.com',
         password: 'password',
-        name: 'Test User',
+        firstName: 'john',
+        lastName: 'doe',
       });
     } catch {
       // Errors are expected in some tests, handle them silently
@@ -94,7 +95,8 @@ describe('AuthContext', () => {
   it('handles successful login', async () => {
     const mockUser = {
       id: '1',
-      name: 'Test User',
+      firstName: 'Test',
+      lastName: 'User',
       email: 'test@test.com',
       role: 'user' as const,
       createdAt: new Date().toISOString(),
@@ -102,7 +104,7 @@ describe('AuthContext', () => {
     };
     const mockToken = 'mock-token';
 
-    mockApiClient.login.mockResolvedValueOnce({
+    mockAuthApi.login.mockResolvedValueOnce({
       success: true,
       data: { user: mockUser, token: mockToken },
     });
@@ -124,7 +126,7 @@ describe('AuthContext', () => {
     });
 
     expect(screen.getByTestId('user')).toHaveTextContent('Test User');
-    expect(mockApiClient.login).toHaveBeenCalledWith({
+    expect(mockAuthApi.login).toHaveBeenCalledWith({
       email: 'test@test.com',
       password: 'password',
     });
@@ -133,7 +135,8 @@ describe('AuthContext', () => {
   it('handles successful registration', async () => {
     const mockUser = {
       id: '1',
-      name: 'Test User',
+      firstName: 'Test',
+      lastName: 'User',
       email: 'test@test.com',
       role: 'user' as const,
       createdAt: new Date().toISOString(),
@@ -141,7 +144,7 @@ describe('AuthContext', () => {
     };
     const mockToken = 'mock-token';
 
-    mockApiClient.register.mockResolvedValueOnce({
+    mockAuthApi.register.mockResolvedValueOnce({
       success: true,
       data: { user: mockUser, token: mockToken },
     });
@@ -163,7 +166,7 @@ describe('AuthContext', () => {
     });
 
     expect(screen.getByTestId('user')).toHaveTextContent('Test User');
-    expect(mockApiClient.register).toHaveBeenCalledWith({
+    expect(mockAuthApi.register).toHaveBeenCalledWith({
       email: 'test@test.com',
       password: 'password',
       name: 'Test User',
@@ -189,7 +192,7 @@ describe('AuthContext', () => {
   });
 
   it('handles API errors gracefully', async () => {
-    mockApiClient.login.mockRejectedValueOnce({
+    mockAuthApi.login.mockRejectedValueOnce({
       error: { message: 'Invalid credentials' },
     });
 
@@ -213,14 +216,15 @@ describe('AuthContext', () => {
   it('refreshes user data', async () => {
     const mockUser = {
       id: '1',
-      name: 'Updated User',
+      firstName: 'Updated',
+      lastName: 'User',
       email: 'test@test.com',
       role: 'user' as const,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    mockApiClient.getProfile.mockResolvedValueOnce({
+    mockAuthApi.getProfile.mockResolvedValueOnce({
       success: true,
       data: mockUser,
     });
@@ -241,7 +245,7 @@ describe('AuthContext', () => {
       expect(screen.getByTestId('user')).toHaveTextContent('Updated User');
     });
 
-    expect(mockApiClient.getProfile).toHaveBeenCalled();
+    expect(mockAuthApi.getProfile).toHaveBeenCalled();
   });
 
   it('throws error when useAuth is used outside AuthProvider', () => {

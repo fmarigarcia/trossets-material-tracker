@@ -8,8 +8,10 @@ export interface BaseEntity {
 // User and Authentication
 export interface User extends BaseEntity {
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   role: 'admin' | 'user';
+  name?: string;
 }
 
 export interface AuthResponse {
@@ -28,7 +30,8 @@ export interface LoginRequest {
 export interface RegisterRequest {
   email: string;
   password: string;
-  name: string;
+  firstName: string;
+  lastName: string;
 }
 
 // Material Management

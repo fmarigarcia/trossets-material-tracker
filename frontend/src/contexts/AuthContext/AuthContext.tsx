@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 import { User, LoginRequest, RegisterRequest } from '@/types';
-import { apiClient } from '@/lib/api';
+import { authApi } from '@/lib/api/auth';
 
 interface ApiError {
   error?: {
@@ -85,7 +85,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           dispatch({ type: 'SET_TOKEN', payload: token });
 
           // Verify token and get user profile
-          const response = await apiClient.getProfile();
+          const response = await authApi.getProfile();
           if (response.success && response.data) {
             dispatch({ type: 'SET_USER', payload: response.data });
           } else {
@@ -111,7 +111,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (credentials: LoginRequest) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      const response = await apiClient.login(credentials);
+      const response = await authApi.login(credentials);
 
       if (response.success && response.data) {
         const { user, token } = response.data;
@@ -130,7 +130,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const register = async (userData: RegisterRequest) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      const response = await apiClient.register(userData);
+      const response = await authApi.register(userData);
 
       if (response.success && response.data) {
         const { user, token } = response.data;
@@ -148,7 +148,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = async () => {
     try {
-      await apiClient.logout();
+      await authApi.logout();
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -159,7 +159,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const refreshUser = async () => {
     try {
-      const response = await apiClient.getProfile();
+      const response = await authApi.getProfile();
       if (response.success && response.data) {
         dispatch({ type: 'SET_USER', payload: response.data });
       }
