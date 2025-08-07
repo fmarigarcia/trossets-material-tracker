@@ -46,8 +46,8 @@ export default function Header({ locale, dict, showNavigation = true }: HeaderPr
             </Link>
           </div>
 
-          {/* Navigation Links */}
-          {showNavigation && (
+          {/* Navigation Links - Only show for authenticated users */}
+          {showNavigation && isAuthenticated && (
             <nav className="hidden space-x-8 md:flex">
               <Link
                 href={`/${locale}/dashboard`}
@@ -104,18 +104,11 @@ export default function Header({ locale, dict, showNavigation = true }: HeaderPr
                 </Button>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
-                <Link href={`/${locale}/auth/login`}>
-                  <Button variant="outline" size="sm" className="text-sm">
-                    {dict.navigation.signIn}
-                  </Button>
-                </Link>
-                <Link href={`/${locale}/auth/register`}>
-                  <Button variant="primary" size="sm" className="text-sm">
-                    {dict.navigation.signUp}
-                  </Button>
-                </Link>
-              </div>
+              <Link href={`/${locale}/auth/login`}>
+                <Button variant="primary" size="sm" className="text-sm">
+                  {dict.navigation.signIn}
+                </Button>
+              </Link>
             )}
           </div>
         </div>

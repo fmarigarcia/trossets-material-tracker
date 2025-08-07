@@ -15,7 +15,7 @@ export default async function HomePage({ params }: HomePageProps) {
   return (
     <div className="bg-secondary-50 min-h-screen">
       {/* Navigation Header */}
-      <Header locale={locale} dict={dict} showNavigation={true} />
+      <Header locale={locale} dict={dict} showNavigation={false} />
 
       {/* Hero Section */}
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
