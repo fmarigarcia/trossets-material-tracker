@@ -24,10 +24,9 @@ interface HeaderProps {
       profile: string;
     };
   };
-  showNavigation?: boolean;
 }
 
-export default function Header({ locale, dict, showNavigation = true }: HeaderProps) {
+export default function Header({ locale, dict }: HeaderProps) {
   const { user, logout, isAuthenticated } = useAuth();
 
   const handleLogout = async () => {
@@ -47,7 +46,7 @@ export default function Header({ locale, dict, showNavigation = true }: HeaderPr
           </div>
 
           {/* Navigation Links - Only show for authenticated users */}
-          {showNavigation && isAuthenticated && (
+          {isAuthenticated && (
             <nav className="hidden space-x-8 md:flex">
               <Link
                 href={`/${locale}/dashboard`}

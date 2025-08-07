@@ -37,7 +37,6 @@ describe('Header', () => {
   const defaultProps = {
     locale: 'en' as Locale,
     dict: mockDict,
-    showNavigation: true,
   };
 
   beforeEach(() => {
@@ -60,8 +59,9 @@ describe('Header', () => {
 
     expect(screen.getByText('Material Tracker')).toBeInTheDocument();
     expect(screen.getByText('Sign In')).toBeInTheDocument();
-    expect(screen.getByText('Sign Up')).toBeInTheDocument();
     expect(screen.queryByText('Logout')).not.toBeInTheDocument();
+    // Navigation should not be visible when not authenticated
+    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument();
   });
 
   it('renders authenticated state correctly', () => {
@@ -92,7 +92,9 @@ describe('Header', () => {
     expect(screen.getByText('Profile')).toBeInTheDocument();
     expect(screen.getByText('Logout')).toBeInTheDocument();
     expect(screen.queryByText('Sign In')).not.toBeInTheDocument();
-    expect(screen.queryByText('Sign Up')).not.toBeInTheDocument();
+    // Navigation should be visible when authenticated
+    expect(screen.getByText('Dashboard')).toBeInTheDocument();
+    expect(screen.getByText('Materials')).toBeInTheDocument();
   });
 
   it('calls logout when logout button is clicked', async () => {
@@ -124,42 +126,53 @@ describe('Header', () => {
     expect(mockLogout).toHaveBeenCalledTimes(1);
   });
 
-  it('hides navigation when showNavigation is false', () => {
+  it('shows navigation when user is authenticated', () => {
     mockUseAuth.mockReturnValue({
-      user: null,
-      token: null,
+      user: {
+        id: '1',
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@example.com',
+        role: 'user' as const,
+        createdAt: '2023-01-01',
+        updatedAt: '2023-01-01',
+      },
+      token: 'mock-token',
       isLoading: false,
-      isAuthenticated: false,
+      isAuthenticated: true,
       login: jest.fn(),
       register: jest.fn(),
       logout: jest.fn(),
       refreshUser: jest.fn(),
     });
 
-    render(<Header {...defaultProps} showNavigation={false} />);
-
-    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument();
-    expect(screen.queryByText('Materials')).not.toBeInTheDocument();
-  });
-
-  it('shows navigation when showNavigation is true', () => {
-    mockUseAuth.mockReturnValue({
-      user: null,
-      token: null,
-      isLoading: false,
-      isAuthenticated: false,
-      login: jest.fn(),
-      register: jest.fn(),
-      logout: jest.fn(),
-      refreshUser: jest.fn(),
-    });
-
-    render(<Header {...defaultProps} showNavigation={true} />);
+    render(<Header {...defaultProps} />);
 
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Materials')).toBeInTheDocument();
     expect(screen.getByText('Projects')).toBeInTheDocument();
     expect(screen.getByText('Purchases')).toBeInTheDocument();
     expect(screen.getByText('Suppliers')).toBeInTheDocument();
+  });
+
+  it('hides navigation when user is not authenticated', () => {
+    mockUseAuth.mockReturnValue({
+      user: null,
+      token: null,
+      isLoading: false,
+      isAuthenticated: false,
+      login: jest.fn(),
+      register: jest.fn(),
+      logout: jest.fn(),
+      refreshUser: jest.fn(),
+    });
+
+    render(<Header {...defaultProps} />);
+
+    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument();
+    expect(screen.queryByText('Materials')).not.toBeInTheDocument();
+    expect(screen.queryByText('Projects')).not.toBeInTheDocument();
+    expect(screen.queryByText('Purchases')).not.toBeInTheDocument();
+    expect(screen.queryByText('Suppliers')).not.toBeInTheDocument();
   });
 });
