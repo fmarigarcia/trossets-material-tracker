@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { FiBox, FiFolder, FiUsers, FiBarChart } from 'react-icons/fi';
 import type { Locale } from '@/middleware';
 import { getDictionary } from '@/dictionaries';
-import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
+import { Header } from '@/components/layout';
 
 interface HomePageProps {
   params: Promise<{ locale: Locale }>;
@@ -15,53 +15,7 @@ export default async function HomePage({ params }: HomePageProps) {
   return (
     <div className="bg-secondary-50 min-h-screen">
       {/* Navigation Header */}
-      <header className="border-secondary-200 border-b bg-white shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center">
-              <FiBox className="text-primary-600 h-8 w-8" />
-              <h1 className="text-secondary-900 ml-3 text-xl font-semibold">{dict.home.title}</h1>
-            </div>
-            <nav className="hidden space-x-8 md:flex">
-              <Link
-                href={`/${locale}/dashboard`}
-                className="text-secondary-600 hover:text-primary-600 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                {dict.navigation.dashboard}
-              </Link>
-              <Link
-                href={`/${locale}/materials`}
-                className="text-secondary-600 hover:text-primary-600 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                {dict.navigation.materials}
-              </Link>
-              <Link
-                href={`/${locale}/projects`}
-                className="text-secondary-600 hover:text-primary-600 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                {dict.navigation.projects}
-              </Link>
-              <Link
-                href={`/${locale}/purchases`}
-                className="text-secondary-600 hover:text-primary-600 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                {dict.navigation.purchases}
-              </Link>
-              <Link
-                href={`/${locale}/suppliers`}
-                className="text-secondary-600 hover:text-primary-600 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                {dict.navigation.suppliers}
-              </Link>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <LanguageSwitcher currentLocale={locale} />
-              <button className="btn btn-outline btn-sm">{dict.navigation.signIn}</button>
-              <button className="btn btn-primary btn-sm">{dict.navigation.signUp}</button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header locale={locale} dict={dict} showNavigation={true} />
 
       {/* Hero Section */}
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

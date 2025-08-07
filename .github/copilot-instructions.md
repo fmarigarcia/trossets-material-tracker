@@ -441,6 +441,13 @@ import '@testing-library/jest-dom';
 - **JSX syntax**: Use `.tsx` extension for files containing JSX
 - **Import organization**: External → Framework → Internal absolute → Internal relative
 - **Unused imports**: Remove all unused imports to pass linting
+- **Internationalization**: All user-facing strings MUST use translations from dictionary
+- **Component logic**: Keep components minimal - extract complex logic to custom hooks
+- **Custom hooks**: Create reusable hooks for form validation, API calls, and state management
+- **Error messages**: Never hardcode error messages - use translated strings from dictionary
+- **Form validation**: Extract validation logic to custom hooks (e.g., `useFormValidation`)
+- **API calls**: Use custom hooks for API operations (e.g., `useLogin`, `useRegister`)
+- **Translation patterns**: Use `dict.section.key` pattern consistently for all text content
 
 ### Database (Prisma/PostgreSQL)
 - Use descriptive model and field names
