@@ -114,9 +114,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await authApi.login(credentials);
 
       if (response.success && response.data) {
-        const { user, token } = response.data;
-        localStorage.setItem('auth_token', token);
-        dispatch({ type: 'SET_AUTH', payload: { user, token } });
+        const { user, tokens } = response.data;
+        localStorage.setItem('auth_token', tokens.accessToken);
+        dispatch({ type: 'SET_AUTH', payload: { user, token: tokens.accessToken } });
       } else {
         throw new Error('Login failed');
       }
@@ -133,9 +133,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const response = await authApi.register(userData);
 
       if (response.success && response.data) {
-        const { user, token } = response.data;
-        localStorage.setItem('auth_token', token);
-        dispatch({ type: 'SET_AUTH', payload: { user, token } });
+        const { user, tokens } = response.data;
+        localStorage.setItem('auth_token', tokens.accessToken);
+        dispatch({ type: 'SET_AUTH', payload: { user, token: tokens.accessToken } });
       } else {
         throw new Error('Registration failed');
       }

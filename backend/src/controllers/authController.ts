@@ -1,18 +1,13 @@
 import { Request, Response } from 'express';
-import { 
-  ApiResponse, 
-  RegisterRequest, 
-  LoginRequest, 
-  AuthResponse, 
+import {
+  ApiResponse,
+  RegisterRequest,
+  LoginRequest,
+  AuthResponse,
   AuthUser,
-  AuthenticatedRequest
+  AuthenticatedRequest,
 } from '../types';
-import { 
-  hashPassword, 
-  comparePassword, 
-  generateTokens, 
-  createSafeUser 
-} from '../utils/auth';
+import { hashPassword, comparePassword, generateTokens, createSafeUser } from '../utils/auth';
 import { prisma } from '../lib/prisma';
 
 /**
@@ -154,7 +149,7 @@ export const logout = async (
     // - Add token to a blacklist
     // - Clear HTTP-only cookies
     // - Invalidate refresh tokens
-    
+
     res.status(200).json({
       success: true,
       data: {
