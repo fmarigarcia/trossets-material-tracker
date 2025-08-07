@@ -34,7 +34,7 @@ export default function ProtectedLayout({ children, locale, dict }: ProtectedLay
   return (
     <AuthGuard locale={locale}>
       <div className="min-h-screen bg-gray-50">
-        <Header locale={locale} dict={dict} showNavigation={true} />
+        <Header locale={locale} dict={dict} />
         <main>{children}</main>
       </div>
     </AuthGuard>
