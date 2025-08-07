@@ -5,12 +5,11 @@ import { AuthProvider, useAuth } from '../AuthContext';
 import { authApi } from '@/lib/api/auth';
 
 // Mock the API client
-jest.mock('@/lib/api', () => ({
-  apiClient: {
+jest.mock('@/lib/api/auth', () => ({
+  authApi: {
     login: jest.fn(),
     register: jest.fn(),
     logout: jest.fn(),
-    get: jest.fn(),
     getProfile: jest.fn(),
   },
 }));
@@ -54,7 +53,9 @@ function TestComponent() {
     <div>
       <div data-testid="loading">{auth.isLoading.toString()}</div>
       <div data-testid="authenticated">{auth.isAuthenticated.toString()}</div>
-      <div data-testid="user">{auth.user?.name || 'No user'}</div>
+      <div data-testid="user">
+        {auth.user ? `${auth.user.firstName} ${auth.user.lastName}` : 'No user'}
+      </div>
       <div data-testid="token">{auth.token || 'No token'}</div>
       <button onClick={handleLogin}>Login</button>
       <button onClick={handleRegister}>Register</button>
@@ -169,7 +170,8 @@ describe('AuthContext', () => {
     expect(mockAuthApi.register).toHaveBeenCalledWith({
       email: 'test@test.com',
       password: 'password',
-      name: 'Test User',
+      firstName: 'john',
+      lastName: 'doe',
     });
   });
 
