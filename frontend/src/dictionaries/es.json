@@ -16,7 +16,8 @@
     "close": "Cerrar",
     "confirm": "Confirmar",
     "yes": "Sí",
-    "no": "No"
+    "no": "No",
+    "fieldRequired": "Este campo es requerido"
   },
   "navigation": {
     "dashboard": "Panel",
@@ -46,7 +47,11 @@
     "accountCreated": "Cuenta creada exitosamente",
     "passwordMismatch": "Las contraseñas no coinciden",
     "emailRequired": "El correo electrónico es requerido",
-    "passwordRequired": "La contraseña es requerida"
+    "passwordRequired": "La contraseña es requerida",
+    "emailInvalid": "Por favor ingresa un correo electrónico válido",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+    "loginFailed": "Error al iniciar sesión. Por favor intenta de nuevo.",
+    "registrationFailed": "Error en el registro. Por favor intenta de nuevo."
   },
   "home": {
     "title": "Gestor de Materiales Trossets",

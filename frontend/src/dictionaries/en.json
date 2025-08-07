@@ -16,7 +16,8 @@
     "close": "Close",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "fieldRequired": "This field is required"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -46,7 +47,11 @@
     "accountCreated": "Account created successfully",
     "passwordMismatch": "Passwords do not match",
     "emailRequired": "Email is required",
-    "passwordRequired": "Password is required"
+    "passwordRequired": "Password is required",
+    "emailInvalid": "Please enter a valid email address",
+    "passwordTooShort": "Password must be at least 6 characters long",
+    "loginFailed": "Login failed. Please try again.",
+    "registrationFailed": "Registration failed. Please try again."
   },
   "home": {
     "title": "Trossets Material Tracker",
